@@ -13,10 +13,10 @@ import {
 await loadProducts("https://supersimplebackend.dev/products");
 import dayjs from "https://unpkg.com/dayjs@1.11.13/esm/index.js";
 import { renderCheckoutHeader } from "./renderCheckoutHeader.js";
+import { renderPaymentSummary } from "./renderPaymentSummary.js";
 
 export function renderOrderSummary() {
   let orderHtml = ``;
-  console.log(cart);
 
   cart.forEach((cartItem) => {
     let matchingProduct = getProduct(cartItem.productId);
@@ -92,6 +92,7 @@ export function renderOrderSummary() {
       let { productId, deliveryoptionId } = link.dataset;
       updateDeliveryOptions(productId, deliveryoptionId);
       renderOrderSummary();
+      renderPaymentSummary();
     })
   );
 
@@ -118,6 +119,7 @@ export function renderOrderSummary() {
           });
           localStorage.setItem("cart", JSON.stringify(cart));
           renderOrderSummary();
+          renderPaymentSummary();
         });
     })
   );
@@ -128,6 +130,7 @@ export function renderOrderSummary() {
       removeFromCart(productId);
       renderOrderSummary();
       renderCheckoutHeader();
+      renderPaymentSummary();
     })
   );
 }
